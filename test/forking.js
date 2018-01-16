@@ -530,7 +530,7 @@ describe("Forking", function() {
       var codeLatest = results.codeLatest;
 
       // There should be no code initially.
-      assert.equal(to.number(codeEarliest), 0)
+      assert.equal(codeEarliest, '0x')
 
       // Arbitrary length check since we can't assert the exact value
       assert(codeAfterFork.length > 20);

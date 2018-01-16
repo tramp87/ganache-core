@@ -161,10 +161,17 @@ describe("Interval Mining", function() {
     var result = solc.compile({sources: {"Example.sol": "pragma solidity ^0.4.2; contract Example { function Example() {throw;} }"}}, 1);
     var bytecode = "0x" + result.contracts["Example.sol:Example"].bytecode;
 
-    web3.eth.sendTransaction({
-      from: first_address,
-      data: bytecode,
-      gas: 3141592
+    // we don't use web3.eth.sendTransaction here because it adds extra
+    // contract deployment monitoring that we don't want
+    web3.eth._provider.send({
+      jsonrpc: "2.0",
+      id: new Date().getTime(),
+      method: "eth_sendTransaction",
+      params: {
+        from: first_address,
+        data: bytecode,
+        gas: 3141592
+      }
     }, function(err, tx) {
       if (err) return done(err);
 

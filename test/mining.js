@@ -408,8 +408,9 @@ describe("Mining", function() {
         // Now check that there's code at the address, which means it deployed successfully.
         return getCode(receipt.contractAddress);
       }).then(function(code) {
-        // Convert hex to a big number and ensure it's not zero.
-        assert(web3.utils.toBN(code).eq(0) == false);
+        assert(code, "we should have some code")
+        assert.notEqual(code, '0x', "we should have some code")
+        assert.notEqual(code, '0x0', "we should have some code")
 
         // Hot diggety dog!
         done();

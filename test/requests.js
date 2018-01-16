@@ -900,6 +900,15 @@ var tests = function(web3) {
     });
   });
 
+  describe("eth_getCode", function() {
+    it("should return 0x for a normal account", function(done) {
+      web3.eth.getCode(accounts[0], (err, result) => {
+        if (err) return done(err);
+        assert.equal(result, '0x')
+        done()
+      });
+    })
+  })
   describe("miner_stop", function(){
     it("should stop mining", function(done){
       web3.currentProvider.send({
