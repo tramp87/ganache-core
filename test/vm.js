@@ -70,7 +70,7 @@ describe("revert opcode", function() {
       })
       .then(function(receipt) {
         assert.notEqual(receipt, null, "Transaction receipt shouldn't be null");
-        assert.equal(receipt.status, 0, "Reverted (failed) transactions should have a status of 0.");
+        assert.equal(receipt.status, false, "Reverted (failed) transactions should have a status of 0.");
       });
   });
 });

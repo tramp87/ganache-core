@@ -25,7 +25,7 @@ function Provider(options) {
     blockTracker: new BlockTracker({ blockchain: gethApiDouble.state.blockchain })
   });
 
-  subscriptionSubprovider = new SubscriptionSubprovider();
+  let subscriptionSubprovider = new SubscriptionSubprovider();
 
   this.engine.manager = gethApiDouble;
   this.engine.addProvider(new RequestFunnel());

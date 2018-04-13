@@ -391,7 +391,7 @@ var tests = function(web3) {
         "gasLimit": "0x33450",
         "from": accounts[0],
         "to": accounts[1],
-        "nonce": "0x00",  // too low nonce
+        "nonce": "0x0000000000000000",  // too low nonce
       })
 
       var secretKeyBuffer = Buffer.from(secretKeys[0].substr(2), 'hex')

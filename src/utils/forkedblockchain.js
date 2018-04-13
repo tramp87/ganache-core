@@ -390,7 +390,7 @@ ForkedBlockchain.prototype.getTransactionReceipt = function(hash, callback) {
         });
 
         var receipt = new Receipt(result.tx, result.block, logs, receipt_json.cumulativeGasUsed,
-          receipt_json.contractAddress, receipt_json.status, to.hex(receipt_json.logsBloom));
+          receipt_json.contractAddress, receipt_json.status ? 1 : 0, to.hex(receipt_json.logsBloom));
 
         callback(null, receipt);
       });

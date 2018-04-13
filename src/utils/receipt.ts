@@ -1,28 +1,26 @@
-var to = require("./to");
+import * as to from './to'
 
-function Receipt(tx, block, logs, gasUsed, contractAddress, status, logsBloom) {
-  this.tx = tx;
-  this.block = block;
-  this.logs = logs;
-  this.gasUsed = gasUsed;
-  this.contractAddress = contractAddress;
-  this.status = status;
-  this.logsBloom = logsBloom;
+function Receipt(tx : any /* TODO */, block : any /* TODO */, logs : any /* TODO */, gasUsed : number, contractAddress : string, status : number, logsBloom : string) {
+  this.tx = tx
+  this.block = block
+  this.logs = logs
+  this.gasUsed = gasUsed
+  this.contractAddress = contractAddress
+  this.status = status
+  this.logsBloom = logsBloom
 
-  this.transactionIndex = 0;
+  this.transactionIndex = 0
 
   for (var i = 0; i < block.transactions.length; i++) {
-    var current = block.transactions[i];
+    var current = block.transactions[i]
     if (current.hash().equals(tx.hash())) {
-      this.transactionIndex = i;
-      break;
+      this.transactionIndex = i
+      break
     }
   }
 }
 
 Receipt.prototype.toJSON = function() {
-  if (this.data != null) return data;
-
   // Enforce Hex formatting as defined in the RPC spec.
   return {
     transactionHash: to.rpcDataHexString(this.tx.hash()),
@@ -32,10 +30,10 @@ Receipt.prototype.toJSON = function() {
     gasUsed: to.rpcQuantityHexString(this.gasUsed),
     cumulativeGasUsed: to.rpcQuantityHexString(this.block.header.gasUsed),
     contractAddress: this.contractAddress != null ? to.rpcDataHexString(this.contractAddress) : null,
-    logs: this.logs.map(function(log) {return log.toJSON()}),
+    logs: this.logs.map(function(log : any /* TODO */) {return log.toJSON()}),
     status: to.rpcQuantityHexString(this.status),
     logsBloom: to.rpcDataHexString(this.logsBloom)
   }
-};
+}
 
-module.exports = Receipt;
+module.exports = Receipt
