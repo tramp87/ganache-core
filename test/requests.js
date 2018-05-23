@@ -3,11 +3,11 @@ var Web3WsProvider = require('web3-providers-ws');
 var Transaction = require('ethereumjs-tx');
 var utils = require('ethereumjs-util');
 var assert = require('assert');
-var Ganache = require("../index.js");
+var Ganache = require("../build/index.node.js");
 var solc = require("solc");
 var fs = require("fs");
 var to = require("../lib/utils/to");
-var _ = require("lodash");
+var clone = require("lodash.clonedeep");
 
 var source = fs.readFileSync("./test/Example.sol", {encoding: "utf8"});
 var result = solc.compile(source, 1);
@@ -558,7 +558,7 @@ var tests = function(web3) {
     });
 
     it("should get back a runtime error on a bad call (eth_call)", function(done) {
-      var call_data = _.cloneDeep(contract.call_data);
+      var call_data = clone(contract.call_data);
       call_data.to = contractAddress;
       call_data.from = accounts[0];
 

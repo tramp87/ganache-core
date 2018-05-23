@@ -1,5 +1,5 @@
 var Web3 = require('web3');
-var Ganache = require("../index.js");
+var Ganache = require("../build/index.node.js");
 var assert = require('assert');
 var to = require('../lib/utils/to.js');
 

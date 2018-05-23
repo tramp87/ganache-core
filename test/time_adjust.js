@@ -1,4 +1,4 @@
-var Ganache = require("../index.js");
+var Ganache = require("../build/index.node.js");
 var assert = require('assert-match');
 var matchers = require('assert-match/matchers');
 var gte = matchers.gte

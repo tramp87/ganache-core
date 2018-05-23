@@ -1,3 +1,5 @@
+require("babel-polyfill")
+
 var Provider = require("./lib/provider");
 var Server = require("./lib/server");
 

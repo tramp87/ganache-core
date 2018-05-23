@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 var assert = require('assert');
-var Ganache = require("../index.js");
+var Ganache = require("../build/index.node.js");
 
 describe("Custom Gas Limit", function() {
   var web3;

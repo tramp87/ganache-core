@@ -1,7 +1,7 @@
 var Web3 = require('web3');
 var utils = require('ethereumjs-util');
 var assert = require('assert');
-var Ganache = require("../index.js");
+var Ganache = require("../build/index.node.js");
 
 var logger = {
   log: function() {}

@@ -1,4 +1,4 @@
-var Ganache = require("../index.js");
+var Ganache = require("../build/index.node.js");
 var solc = require("solc");
 var to = require("../lib/utils/to.js");
 var async = require("async");

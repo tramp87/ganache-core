@@ -1,6 +1,6 @@
 var BN = require('bn.js');
 var Web3 = require('web3');
-var Ganache = require("../index.js");
+var Ganache = require("../build/index.node.js");
 var assert = require('assert');
 
 describe("Accounts", function() {
