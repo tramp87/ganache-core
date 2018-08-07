@@ -4,8 +4,8 @@ const outputDir = path.join(__dirname, "..", "build");
 const _ = require("lodash");
 
 const config = applyBaseConfig({
-  entry: "./index.js",
-  target: "node",
+  entry: ["babel-polyfill", "./index.js"],
+  target: "web",
   output: {
     path: outputDir,
     library: "Ganache",

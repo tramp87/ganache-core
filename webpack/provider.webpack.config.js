@@ -4,7 +4,7 @@ const outputDir = path.join(__dirname, "..", "build");
 const outputFilename = "ganache.provider.js";
 
 module.exports = applyBaseConfig({
-  entry: "./lib/provider.js",
+  entry: ['babel-polyfill', "./lib/provider.js"],
   target: "node",
   output: {
     path: outputDir,
