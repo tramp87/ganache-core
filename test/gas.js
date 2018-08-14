@@ -176,7 +176,7 @@ describe("Gas", function() {
           return fn
             .estimateGas(options)
             .then(function(estimate) {
-              options.gas = transactionGas
+              options.gas = transactionGas || estimate;
               return fn.send(options)
                 .then(function (receipt) {
                   assert.equal(receipt.status, 1, 'Transaction must succeed');
@@ -205,6 +205,40 @@ describe("Gas", function() {
     it("matches usage for complex function call (transfer)", function() {
       this.timeout(10000)
       return testTransactionEstimate(estimateGasInstance.methods.transfer, ["0x0123456789012345678901234567890123456789", 5, toBytes("Tim")], {from: accounts[0], gas: 3141592});
+    });
+
+    it("matches usage for complex function call (depth: 1, max gas)", function() {
+      this.timeout(10000);
+      return web3.eth.getBlock("latest").then(function(block){
+        var limit = block.gasLimit;
+        return testTransactionEstimate(estimateGasInstance.methods.depth, [1], {from: accounts[0], gas: limit});
+      });
+    });
+    it("matches usage for complex function call (depth: 2, max gas)", function() {
+      this.timeout(10000);
+      return web3.eth.getBlock("latest").then(function(block){
+        var limit = block.gasLimit;
+        return testTransactionEstimate(estimateGasInstance.methods.depth, [2], {from: accounts[0], gas: limit});
+      });
+    });
+    it("matches usage for complex function call (depth: 3, max gas)", function() {
+      this.timeout(10000);  
+      return web3.eth.getBlock("latest").then(function(block){
+        var limit = block.gasLimit;
+        return testTransactionEstimate(estimateGasInstance.methods.depth, [3], {from: accounts[0], gas: limit});
+      });
+    });
+    it("matches usage for complex function call (depth: 1)", function() {
+      this.timeout(10000);  
+      return testTransactionEstimate(estimateGasInstance.methods.depth, [1], {from: accounts[0]});
+    });
+    it("matches usage for complex function call (depth: 2)", function() {
+      this.timeout(10000);  
+      return testTransactionEstimate(estimateGasInstance.methods.depth, [2], {from: accounts[0]});
+    });
+    it("matches usage for complex function call (depth: 3)", function() {
+      this.timeout(10000);  
+      return testTransactionEstimate(estimateGasInstance.methods.depth, [3], {from: accounts[0]});
     });
 
     function toBytes(s) {

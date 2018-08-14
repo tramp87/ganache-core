@@ -43,6 +43,19 @@ contract EstimateGas {
         tests.length++;
     }
 
+    // Tests the "All but one 64th" rule from EIP-150
+    uint256 finalGasRemaining;
+    function depth(uint256 y) public {
+        if(y > 0){
+            if(!this.delegatecall(bytes4(keccak256("depth(uint256)")), --y)){
+                revert("delegatecall failed");
+            }
+        }
+        else {
+            finalGasRemaining = gasleft();
+        }
+    }
+
     function add(bytes32 _name, bytes32 _description, uint _value) returns(bool) {
         if (index[_name] != 0) {
             return false;
