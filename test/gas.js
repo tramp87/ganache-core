@@ -51,6 +51,26 @@ describe("Gas", function() {
         return instance;
       });
     }
+    it("accounts for gas stipend in gasEstimate", async () => {
+      const from = accounts[0];
+      const options = {from, gas: 5000000};
+      const estimateGasInstance = await deployContract();
+      return estimateGasInstance.methods.reset().send(options)  // prime storage by making sure it is set to 0
+        .then(() => {
+          const method = estimateGasInstance.methods.gasStipend();
+
+          return method.estimateGas(options)
+            .then((gas)=>{
+              return {from, gas};
+            }).then(options => {
+              const gasEstimate = options.gas;
+              return method.send(options).then(receipt=>({gasEstimate, receipt}));
+            }).then(data => {
+              assert.strictEqual(data.receipt.gasUsed, data.gasEstimate);
+              assert.strictEqual(data.receipt.gasUsed, data.receipt.cumulativeGasUsed);
+            });
+      });
+    });
 
     it("accounts for Rsclear Refund in gasEstimate", async () => {
       const from = accounts[0];

@@ -26,6 +26,9 @@ contract EstimateGas {
         triggerRsclearRefund();
         triggerRselfdestructRefund();
     }
+    function gasStipend() public {
+        this.reset.gas(10000)();
+    }
 
     mapping(bytes32 => uint) index;
     Test[] tests;
