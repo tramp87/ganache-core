@@ -1,5 +1,9 @@
 pragma solidity ^0.4.2;
 
+contract ProxyTarget {  
+    constructor() public {}  
+}
+
 // From https://github.com/ethereumjs/testrpc/issues/58
 contract EstimateGas {
     event Add(bytes32 name, bytes32 description, uint value, address owner);
@@ -36,6 +40,15 @@ contract EstimateGas {
     function EstimateGas() {
         tests.length++;
     }
+    
+    function deposit() public payable {}
+    function withdraw() public {
+        msg.sender.transfer(address(this).balance);
+    }
+
+    function callOtherContract() public {  
+        new ProxyTarget();
+    } 
 
     function add(bytes32 _name, bytes32 _description, uint _value) returns(bool) {
         if (index[_name] != 0) {

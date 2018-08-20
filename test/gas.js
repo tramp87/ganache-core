@@ -176,7 +176,7 @@ describe("Gas", function() {
           return fn
             .estimateGas(options)
             .then(function(estimate) {
-              options.gas = transactionGas
+              options.gas = transactionGas || estimate;
               return fn.send(options)
                 .then(function (receipt) {
                   assert.equal(receipt.status, 1, 'Transaction must succeed');
@@ -205,6 +205,17 @@ describe("Gas", function() {
     it("matches usage for complex function call (transfer)", function() {
       this.timeout(10000)
       return testTransactionEstimate(estimateGasInstance.methods.transfer, ["0x0123456789012345678901234567890123456789", 5, toBytes("Tim")], {from: accounts[0], gas: 3141592});
+    });
+
+    it("matches usage for eth transfer", async() => {
+      const val = web3.utils.toWei("1", "ether");
+      const limit = (await web3.eth.getBlock("latest")).gasLimit;
+      await estimateGasInstance.methods.deposit().send({"from": accounts[1], "value": val, "gas": limit});
+      await testTransactionEstimate(estimateGasInstance.methods.withdraw, [], {from: accounts[0]});
+    });
+
+    it("matches usage for calling other contract", async() => {
+      await testTransactionEstimate(estimateGasInstance.methods.callOtherContract, [], {"from": accounts[0]});
     });
 
     function toBytes(s) {
